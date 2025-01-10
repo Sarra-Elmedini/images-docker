@@ -1,0 +1,19 @@
+---
+
+name: try docker push image
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          docker build -t sarradocker1/mavache:1 .
+          docker login -u sarradocker1 -p $DOCKERHUB_TOKEN
+          docker push sarradocker1/mavache:latest
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_AURELIEN_TOKEN }}
